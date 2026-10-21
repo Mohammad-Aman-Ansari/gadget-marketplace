@@ -12,7 +12,7 @@
         <a href="{% url 'home' %}" class="logo">⚡ GadgetHub</a>
         <nav class="nav-links">
             <a href="{% url 'home' %}">Browse Gadgets</a>
-            <a href="/admin/" class="btn-sell">+ Sell a Gadget</a>
+            <a href="{% url 'sell_gadget' %}" class="btn-sell">+ Sell a Gadget</a>
         </nav>
     </header>
 
@@ -20,12 +20,30 @@
         <section class="hero">
             <h1>Buy & Sell Verified Tech Gadgets</h1>
             <p>Shop brand-new and pre-owned smartphones, laptops, and audio gear.</p>
+
+            <form method="GET" action="{% url 'home' %}" class="search-bar">
+                {% if selected_category %}
+                    <input type="hidden" name="category" value="{{ selected_category }}">
+                {% endif %}
+                <input type="text" name="q" placeholder="Search by gadget name or brand..." value="{{ search_query }}">
+                <select name="condition">
+                    <option value="">All Conditions</option>
+                    <option value="new" {% if selected_condition == 'new' %}selected{% endif %}>Brand New</option>
+                    <option value="like_new" {% if selected_condition == 'like_new' %}selected{% endif %}>Open Box / Like New</option>
+                    <option value="refurbished" {% if selected_condition == 'refurbished' %}selected{% endif %}>Certified Refurbished</option>
+                    <option value="used" {% if selected_condition == 'used' %}selected{% endif %}>Pre-Owned / Good</option>
+                </select>
+                <button type="submit" class="btn-buy">Search</button>
+            </form>
         </section>
 
         <div class="category-bar">
-            <span class="chip active">All Gadgets</span>
+            <a href="{% url 'home' %}" class="chip {% if not selected_category %}active{% endif %}">All Gadgets</a>
             {% for cat in categories %}
-                <span class="chip">{{ cat.name }}</span>
+                <a href="?category={{ cat.slug }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_condition %}&condition={{ selected_condition }}{% endif %}"
+                   class="chip {% if selected_category == cat.slug %}active{% endif %}">
+                    {{ cat.name }}
+                </a>
             {% endfor %}
         </div>
 
@@ -53,7 +71,7 @@
                     </div>
                 </article>
             {% empty %}
-                <p>No gadgets listed yet. Add some from the admin panel!</p>
+                <p>No gadgets match your filter. <a href="{% url 'home' %}">Reset filters</a></p>
             {% endfor %}
         </section>
     </main>

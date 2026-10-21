@@ -31,3 +31,16 @@ body { background: #f4f6f9; color: #1e293b; }
 .price { font-size: 1.2rem; font-weight: 700; color: #0f172a; }
 .btn-buy { background: #2563eb; color: #fff; border: none; padding: 0.5rem 0.9rem; border-radius: 6px; cursor: pointer; font-weight: 600; }
 .btn-buy:hover { background: #1d4ed8; }
+
+.search-bar { display: flex; gap: 0.6rem; justify-content: center; max-width: 680px; margin: 1.25rem auto 0; flex-wrap: wrap; }
+.search-bar input, .search-bar select { padding: 0.6rem 0.9rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; }
+.search-bar input { flex: 1; min-width: 220px; }
+.chip { text-decoration: none; color: #1e293b; }
+
+.form-card { max-width: 560px; margin: 2rem auto; background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+.form-card .subtitle { color: #64748b; margin: 0.3rem 0 1.5rem; font-size: 0.92rem; }
+.sell-form p { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.sell-form label { font-weight: 600; font-size: 0.9rem; }
+.sell-form input, .sell-form select, .sell-form textarea { padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; }
+.sell-form textarea { height: 90px; resize: vertical; }
+.btn-full { width: 100%; padding: 0.75rem; font-size: 1rem; margin-top: 0.5rem; }
