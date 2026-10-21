@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GadgetHub | Buy & Sell Gadgets</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <a href="{% url 'home' %}" class="logo">⚡ GadgetHub</a>
+        <nav class="nav-links">
+            <a href="{% url 'home' %}">Browse Gadgets</a>
+            <a href="/admin/" class="btn-sell">+ Sell a Gadget</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Buy & Sell Verified Tech Gadgets</h1>
+            <p>Shop brand-new and pre-owned smartphones, laptops, and audio gear.</p>
+        </section>
+
+        <div class="category-bar">
+            <span class="chip active">All Gadgets</span>
+            {% for cat in categories %}
+                <span class="chip">{{ cat.name }}</span>
+            {% endfor %}
+        </div>
+
+        <section class="gadget-grid">
+            {% for gadget in gadgets %}
+                <article class="card">
+                    <div class="card-img">
+                        {% if gadget.image %}
+                            <img src="{{ gadget.image.url }}" alt="{{ gadget.title }}">
+                        {% else %}
+                            <div class="placeholder-img">📱 No Image</div>
+                        {% endif %}
+                        <span class="badge badge-{{ gadget.condition }}">
+                            {{ gadget.get_condition_display }}
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <span class="brand">{{ gadget.brand }} · {{ gadget.category.name }}</span>
+                        <h3>{{ gadget.title }}</h3>
+                        <p class="seller">Sold by @{{ gadget.seller.username }}</p>
+                        <div class="card-footer">
+                            <span class="price">₹{{ gadget.price }}</span>
+                            <button class="btn-buy">Add to Cart</button>
+                        </div>
+                    </div>
+                </article>
+            {% empty %}
+                <p>No gadgets listed yet. Add some from the admin panel!</p>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>
