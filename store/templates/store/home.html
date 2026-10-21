@@ -13,13 +13,14 @@
         <nav class="nav-links">
             <a href="{% url 'home' %}">Browse Gadgets</a>
             <a href="{% url 'sell_gadget' %}" class="btn-sell">+ Sell a Gadget</a>
+            <button id="cart-toggle" class="btn-cart">🛒 Cart (<span id="cart-count">0</span>)</button>
         </nav>
     </header>
 
     <main class="container">
         <section class="hero">
             <h1>Buy & Sell Verified Tech Gadgets</h1>
-            <p>Shop brand-new and pre-owned smartphones, laptops, and audio gear.</p>
+            <p>Shop brand-new and pre-owned smartphones, laptops, and audio gear with instant cart checkout.</p>
 
             <form method="GET" action="{% url 'home' %}" class="search-bar">
                 {% if selected_category %}
@@ -66,7 +67,12 @@
                         <p class="seller">Sold by @{{ gadget.seller.username }}</p>
                         <div class="card-footer">
                             <span class="price">₹{{ gadget.price }}</span>
-                            <button class="btn-buy">Add to Cart</button>
+                            <button class="btn-buy add-to-cart-btn"
+                                    data-id="{{ gadget.id }}"
+                                    data-title="{{ gadget.title }}"
+                                    data-price="{{ gadget.price }}">
+                                Add to Cart
+                            </button>
                         </div>
                     </div>
                 </article>
@@ -75,5 +81,23 @@
             {% endfor %}
         </section>
     </main>
+
+    <aside id="cart-drawer" class="cart-drawer">
+        <div class="cart-header">
+            <h3>Your Shopping Cart</h3>
+            <button id="close-cart" class="btn-close">✕</button>
+        </div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-summary">
+            <div class="cart-total-row">
+                <span>Total:</span>
+                <strong>₹<span id="cart-total">0.00</span></strong>
+            </div>
+            <button class="btn-buy btn-full" onclick="alert('Next in Phase 5: User Login & Order Checkout!')">Proceed to Checkout</button>
+            <button id="clear-cart" class="btn-clear">Clear Cart</button>
+        </div>
+    </aside>
+
+    <script src="{% static 'store/cart.js' %}"></script>
 </body>
 </html>
