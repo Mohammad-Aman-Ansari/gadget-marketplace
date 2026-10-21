@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell a Gadget | GadgetHub</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <a href="{% url 'home' %}" class="logo">⚡ GadgetHub</a>
+        <nav class="nav-links">
+            <a href="{% url 'home' %}">← Back to Store</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="form-card">
+            <h2>List Your Gadget for Sale</h2>
+            <p class="subtitle">Fill in the details below to list your new or pre-owned device.</p>
+            <form method="POST" enctype="multipart/form-data" class="sell-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn-buy btn-full">Publish Listing</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
