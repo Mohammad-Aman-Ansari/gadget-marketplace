@@ -71,3 +71,38 @@ document.getElementById('clear-cart').addEventListener('click', () => {
 });
 
 saveAndRenderCart();
+
+document.getElementById('checkout-btn').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    if (btn.dataset.auth !== 'true') {
+        alert('Please log in or sign up to complete your order.');
+        window.location.href = '/login/';
+        return;
+    }
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+    const address = document.getElementById('shipping-address').value.trim();
+    if (!address) {
+        alert('Please enter your delivery address.');
+        return;
+    }
+
+    const response = await fetch('/checkout/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': btn.dataset.csrf,
+        },
+        body: JSON.stringify({ items: cart, address }),
+    });
+    const result = await response.json();
+    if (result.success) {
+        cart = [];
+        saveAndRenderCart();
+        window.location.href = result.redirect_url;
+    } else {
+        alert(result.error || 'Checkout failed.');
+    }
+});
